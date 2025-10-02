@@ -75,8 +75,8 @@ with tab1:
             st.image(user_image, caption = "Uploaded Image")
 
             #getting the predictions
-            with user_image:
-                payload = base64.b64encode(user_image.read())
+            with image:
+                payload = base64.b64encode(image.read())
                 response = get_prediction(payload, ENDPOINT_URL)
                 st.success(f"Class Label: {response}")
                 account_id = response
