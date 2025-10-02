@@ -58,25 +58,31 @@ with tab1:
     #you can change the label name as your preference
     image = st.file_uploader(label="Upload an image",accept_multiple_files=False, help="Upload an image to classify them")
 
+
+
     if image:
         #validating the image type
+        
         image_type = image.type.split("/")[-1]
         if image_type not in ['jpg','jpeg','png','jfif']:
             st.error("Invalid file type : {}".format(image.type), icon="🚨")
         else:
             #displaying the image
-            st.image(image, caption = "Uploaded Image")
+            user_image = Image.open(image)
+            # save the image to set the path
+            user_image.save(IMAGE_NAME)
+            st.image(user_image, caption = "Uploaded Image")
 
             #getting the predictions
-            with image:
-                payload = base64.b64encode(image.read())
+            with user_image:
+                payload = base64.b64encode(user_image.read())
                 response = get_prediction(payload, ENDPOINT_URL)
                 st.success(f"Class Label: {response}")
                 account_id = response
                 submitted = st.button("Upload to DB")
 
             if submitted:
-                upload_file(client, image, account_id)
+                upload_file(client, user_image, account_id)
                 # if not account_id:
                 #     st.warning("Enter an account ID before uploading.")
                 
