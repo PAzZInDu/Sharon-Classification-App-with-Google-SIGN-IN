@@ -72,24 +72,28 @@ with tab1:
                 payload = base64.b64encode(image.read())
                 response = get_prediction(payload, ENDPOINT_URL)
                 st.success(f"Class Label: {response}")
+                account_id = response
                 submitted = st.button("Upload to DB")
 
             if submitted:
-                if not account_id:
-                    st.warning("Enter an account ID before uploading.")
-                elif uploaded_file is None:
-                    st.warning("Choose a logo file to upload.")
-                else:
-                    storage_path = upload_file(client, uploaded_file, account_id)
-                    if storage_path:
-                        stored = record_logo_entry(
-                            client,
-                            account_id,
-                            uploaded_file.name,
-                            storage_path,
-                        )
-                        if stored:
-                            st.success(f"Stored logo '{uploaded_file.name}' for account '{account_id}'.")
+                upload_file(client, image, account_id)
+                # if not account_id:
+                #     st.warning("Enter an account ID before uploading.")
+                
+                
+                # elif uploaded_file is None:
+                #     st.warning("Choose a logo file to upload.")
+                # else:
+                #     storage_path = upload_file(client, uploaded_file, account_id)
+                #     if storage_path:
+                #         stored = record_logo_entry(
+                #             client,
+                #             account_id,
+                #             uploaded_file.name,
+                #             storage_path,
+                #         )
+                #         if stored:
+                #             st.success(f"Stored logo '{uploaded_file.name}' for account '{account_id}'.")
             
         
 
