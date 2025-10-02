@@ -5,12 +5,20 @@ import base64
 import os
 from PIL import Image
 
+from file_upload import upload_file, download_file, record_logo_entry, fetch_accounts, fetch_logos_for_account, render_logo_gallery
+
+
 
 if not st.user.is_logged_in:
     st.error("Please log in to access the App")
     st.stop()
 
 ENDPOINT_URL = 'https://askai.aiclub.world/27a37a06-93bd-4ec5-a56c-963adc53c0e7'
+
+
+BUCKET_NAME = st.secrets.get("SUPABASE_BUCKET", "Butterfly_Classification")
+TABLE_NAME = st.secrets.get("SUPABASE_TABLE", "account_logos")
+SUPPORTED_TYPES = ["png", "jpg", "jpeg", "gif"]
 
 #####functions#########
 def get_prediction(image_data, url):
@@ -26,6 +34,7 @@ def get_prediction(image_data, url):
 #title of the web page
 st.title("Butterfly Classifer")
 
+client = create_client(st.secrets["SUPABASE_URL"], st.secrets["SUPABASE_KEY"])
 #setting the main picture
 st.image(
     "https://t4.ftcdn.net/jpg/10/09/58/79/360_F_1009587933_xfLSLUHWaMJDnhvB6rJFtYZosRs0ObNr.jpg", 
@@ -62,6 +71,27 @@ with tab1:
                 payload = base64.b64encode(image.read())
                 response = get_prediction(payload, ENDPOINT_URL)
                 st.success(f"Class Label: {response}")
+                submitted = st.button("Upload to DB")
+
+            if submitted:
+                if not account_id:
+                    st.warning("Enter an account ID before uploading.")
+                elif uploaded_file is None:
+                    st.warning("Choose a logo file to upload.")
+                else:
+                    storage_path = upload_file(client, uploaded_file, account_id)
+                    if storage_path:
+                        stored = record_logo_entry(
+                            client,
+                            account_id,
+                            uploaded_file.name,
+                            storage_path,
+                        )
+                        if stored:
+                            st.success(
+                                f"Stored logo '{uploaded_file.name}' for account '{account_id}'."
+            
+        
 
 
 with tab2:
