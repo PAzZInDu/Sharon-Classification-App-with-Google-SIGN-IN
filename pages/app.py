@@ -88,8 +88,7 @@ with tab1:
                             storage_path,
                         )
                         if stored:
-                            st.success(
-                                f"Stored logo '{uploaded_file.name}' for account '{account_id}'."
+                            st.success(f"Stored logo '{uploaded_file.name}' for account '{account_id}'.")
             
         
 
