@@ -25,7 +25,7 @@ IMAGE_NAME = "user_image.png"
 #####functions#########
 def get_prediction(image_data, url):
   r = requests.post(url, data=image_data)
-  response = r.json()['predicted_label']
+  response = r.json()
   print(response)
   return response
 
