@@ -20,6 +20,7 @@ ENDPOINT_URL = 'https://askai.aiclub.world/27a37a06-93bd-4ec5-a56c-963adc53c0e7'
 BUCKET_NAME = st.secrets.get("SUPABASE_BUCKET", "Butterfly_Classification")
 TABLE_NAME = st.secrets.get("SUPABASE_TABLE", "account_logos")
 SUPPORTED_TYPES = ["png", "jpg", "jpeg", "gif"]
+IMAGE_NAME = "user_image.png"
 
 #####functions#########
 def get_prediction(image_data, url):
@@ -63,10 +64,10 @@ with tab1:
     if image:
         #validating the image type
         
-        image_type = image.type.split("/")[-1]
-        if image_type not in ['jpg','jpeg','png','jfif']:
-            st.error("Invalid file type : {}".format(image.type), icon="🚨")
-        else:
+        # image_type = image.type.split("/")[-1]
+        # if image_type not in ['jpg','jpeg','png','jfif']:
+        #     st.error("Invalid file type : {}".format(image.type), icon="🚨")
+        # else:
             #displaying the image
             user_image = Image.open(image)
             # save the image to set the path
