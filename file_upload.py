@@ -4,7 +4,7 @@ from typing import List, Optional
 import streamlit as st
 from supabase import Client, create_client
 
-BUCKET_NAME
+
 
 
 def upload_file(client: Client, uploaded_file, account_id: str) -> Optional[str]:
