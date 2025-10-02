@@ -72,6 +72,7 @@ with tab1:
             user_image = Image.open(image)
             # save the image to set the path
             user_image.save(IMAGE_NAME)
+            IMG_NAME = image.name 
             st.image(user_image, caption = "Uploaded Image")
 
             #getting the predictions
@@ -83,7 +84,7 @@ with tab1:
                 submitted = st.button("Upload to DB")
 
             if submitted:
-                upload_file(client, user_image, account_id)
+                upload_file(client, user_image, account_id, image_name = IMG_NAME)
                 # if not account_id:
                 #     st.warning("Enter an account ID before uploading.")
                 

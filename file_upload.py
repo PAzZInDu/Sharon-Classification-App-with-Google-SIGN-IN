@@ -6,9 +6,8 @@ from supabase import Client, create_client
 
 
 
-
-def upload_file(client: Client, uploaded_file, account_id: str) -> Optional[str]:
-    file_name = uploaded_file.name
+def upload_file(client: Client, uploaded_file, account_id: str, image_name) -> Optional[str]:
+    file_name = image_name
     storage_path = f"{account_id}/{file_name}"
     file_bytes = uploaded_file.getvalue()
     try:
