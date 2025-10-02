@@ -81,11 +81,11 @@ with tab1:
                 payload = base64.b64encode(data_bytes)
                 response = get_prediction(payload, ENDPOINT_URL)
                 st.success(f"Class Label: {response}")
-                account_id = response
+                #account_id = response
                 submitted = st.button("Upload to DB")
 
             if submitted:
-                upload_file(client, user_image, account_id, image_name = IMG_NAME, data = data_bytes)
+                upload_file(client, user_image, account_id = 'Dogs', image_name = IMG_NAME, data = data_bytes)
                 # if not account_id:
                 #     st.warning("Enter an account ID before uploading.")
                 
