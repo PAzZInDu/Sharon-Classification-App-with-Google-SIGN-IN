@@ -4,6 +4,7 @@ import requests
 import base64
 import os
 from PIL import Image
+from supabase import create_client
 
 from file_upload import upload_file, download_file, record_logo_entry, fetch_accounts, fetch_logos_for_account, render_logo_gallery
 
