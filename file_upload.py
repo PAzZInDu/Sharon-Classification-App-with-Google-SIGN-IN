@@ -4,7 +4,7 @@ from typing import List, Optional
 import streamlit as st
 from supabase import Client, create_client
 
-
+BUCKET_NAME = st.secrets.get("SUPABASE_BUCKET", "Butterfly_Classification")
 
 def upload_file(client: Client, uploaded_file, account_id: str, image_name, data) -> Optional[str]:
     file_name = image_name
