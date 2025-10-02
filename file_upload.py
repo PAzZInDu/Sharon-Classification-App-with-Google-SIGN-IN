@@ -6,12 +6,12 @@ from supabase import Client, create_client
 
 
 
-def upload_file(client: Client, uploaded_file, account_id: str, image_name) -> Optional[str]:
+def upload_file(client: Client, uploaded_file, account_id: str, image_name, data) -> Optional[str]:
     file_name = image_name
     storage_path = f"{account_id}/{file_name}"
-    file_bytes = uploaded_file.getvalue()
+    # file_bytes = uploaded_file.getvalue()
     try:
-        client.storage.from_(BUCKET_NAME).upload(path=storage_path,file=file_bytes)
+        client.storage.from_(BUCKET_NAME).upload(path=storage_path,file=data)
         return storage_path
     except Exception as exc:
         st.error(f"Upload failed: {exc}")
